@@ -1,0 +1,8 @@
+{
+    "editor.codeLens": true,
+    "cSpell.words": [
+        "mayaqt",
+        "pytest"
+    ],
+    "python.pythonPath": ".venv\\Scripts\\python.exe",
+}
