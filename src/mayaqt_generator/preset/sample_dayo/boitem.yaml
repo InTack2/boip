@@ -1,0 +1,11 @@
+title: sample_01
+convertExtensions:
+  txt: py
+  ui: ui
+question:
+  - name: title
+    message: "質問１"
+    default: "日本語もいける"
+  - name: sample_2
+    message: "質問2"
+    default: "いい感じ"

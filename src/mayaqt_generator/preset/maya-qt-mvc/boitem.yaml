@@ -1,0 +1,15 @@
+title: maya_qt_mvc
+convertExtensions:
+  txt: py
+  ui: ui
+question:
+  - name: folder_name
+    message: "What folder_name?"
+
+  - name: window_title
+    message: "Window name?"
+    default: sampleWindow
+
+  - name: maya_version
+    message: "What version of Maya are you using?"
+    default: 2020

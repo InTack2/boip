@@ -1,0 +1,25 @@
+# -*- coding: utf-8 -*-
+
+from PySide2 import QtCore, QtGui, QtWidgets
+
+
+class Ui_{Title}(object):
+    def setupUi(self, {Title}):
+        {Title}.setObjectName("{Title}")
+        {Title}.resize(800, 600)
+        self.centralwidget = QtWidgets.QWidget({Title})
+        self.centralwidget.setObjectName("centralwidget")
+        {Title}.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar({Title})
+        self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
+        self.menubar.setObjectName("menubar")
+        {Title}.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar({Title})
+        self.statusbar.setObjectName("statusbar")
+        {Title}.setStatusBar(self.statusbar)
+
+        self.retranslateUi({Title})
+        QtCore.QMetaObject.connectSlotsByName({Title})
+
+    def retranslateUi(self, {Title}):
+        {Title}.setWindowTitle(QtWidgets.QApplication.translate("{Title}", "{Title}", None, -1))
