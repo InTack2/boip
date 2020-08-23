@@ -54,6 +54,14 @@ class BoitemQuestionCreator(object):
         return title
 
     def create_multi_question(self, target_title):
+        """複数の質問を生成
+
+        Args:
+            target_title (str): 設定fileのタイトル
+
+        Returns:
+            list: questions.
+        """
         add_questions = _boitem_question_creator.operator.select_questions(target_title)
         questions = []
         for quest in add_questions:
