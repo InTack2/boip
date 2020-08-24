@@ -68,13 +68,11 @@ class FolderOperation(object):
             target_folder (str): 複製先のフォルダ
         """
         current_directory = os.getcwd()
-        print("current_directory:{}".format(current_directory))
-        print("src_folder_name:{}".format(src_folder_name))
-        
+
         target_folder = os.path.join(current_directory, src_folder_name)
 
-        print("target_folder:{}".format(target_folder))
         shutil.copytree(dis_folder, target_folder)
+        return target_folder
 
     def get_title_list(self):
         """タイトルリストを取得する

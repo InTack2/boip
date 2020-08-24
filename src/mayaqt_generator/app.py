@@ -47,9 +47,6 @@ class BoitemQuestionCreator(object):
         ]
         answers = PyInquirer.prompt(questions)
         title = answers["title"]
-        template_path = self.operator.select_template_path(title)
-        folder_name = self.create_folder_question()
-        self.operator.duplicate_template_folder(template_path, folder_name)
 
         return title
 
@@ -76,7 +73,12 @@ class BoitemQuestionCreator(object):
         questions_answers = PyInquirer.prompt(questions)
         return questions_answers
 
-    def create_folder_question(self):
+    def create_folder_question(self, title):
+        """folderを確認する質問を作成
+
+        Returns:
+            [type]: [description]
+        """
         question = {
             "type": "input",
             "name": "folder_name",
@@ -85,7 +87,14 @@ class BoitemQuestionCreator(object):
         folder_answer = PyInquirer.prompt(question)
         if folder_answer["folder_name"] == "":
             raise self.NotFoundFolderName("フォルダ名が不正です。")
-        return folder_answer["folder_name"]
+
+        folder_name = folder_answer["folder_name"]
+
+        template_path = self.operator.select_template_path(title)
+
+        copy_path = self.operator.duplicate_template_folder(template_path, folder_name)
+
+        return copy_path
 
     class NotFoundFolderName(Exception):
         pass
@@ -93,9 +102,12 @@ class BoitemQuestionCreator(object):
 
 if __name__ == "__main__":
     _boitem_question_creator = BoitemQuestionCreator()
+
     title_answer = _boitem_question_creator.create_template_selector()
-    # answers = _boitem_question_creator.create_multi_question(title_answer)
+    answers = _boitem_question_creator.create_multi_question(title_answer)
+    create_folder = _boitem_question_creator.create_folder_question(title_answer)
 
     # リスト質問
-
-    print(title_answer)
+    print("title_answer :{}".format(title_answer))
+    print(answers)
+    print("create_folder : {}".format(create_folder))
