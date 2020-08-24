@@ -3,9 +3,6 @@ convertExtensions:
   txt: py
   ui: ui
 question:
-  - name: folder_name
-    message: "What folder_name?"
-
   - name: window_title
     message: "Window name?"
     default: sampleWindow
