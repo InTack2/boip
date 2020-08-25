@@ -13,7 +13,7 @@ import pprint
 
 import PyInquirer
 
-from operation import FolderOperation
+from operation import FolderOperation, TemplateFolderOperator
 
 custom_style_2 = PyInquirer.style_from_dict({
     "separator": '#6C6C6C',
@@ -96,6 +96,10 @@ class BoitemQuestionCreator(object):
 
         return copy_path
 
+    def operation_replace_file(self, target_folder_path, convert_extension_data, formatter_data):
+        _ins = TemplateFolderOperator(target_folder_path, convert_extension_data, formatter_data)
+        _ins.replace_files()
+
     class NotFoundFolderName(Exception):
         pass
 
@@ -106,6 +110,8 @@ if __name__ == "__main__":
     title_answer = _boitem_question_creator.create_template_selector()
     answers = _boitem_question_creator.create_multi_question(title_answer)
     create_folder = _boitem_question_creator.create_folder_question(title_answer)
+    convert_extension_data = _boitem_question_creator.operator.select_convert_extensions(title_answer)
+    _boitem_question_creator.operation_replace_file(create_folder, convert_extension_data, formatter_data=answers)
 
     # リスト質問
     print("title_answer :{}".format(title_answer))
