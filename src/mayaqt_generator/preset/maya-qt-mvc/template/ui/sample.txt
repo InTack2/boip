@@ -3,23 +3,23 @@
 from PySide2 import QtCore, QtGui, QtWidgets
 
 
-class Ui_{Title}(object):
-    def setupUi(self, {Title}):
-        {Title}.setObjectName("{Title}")
-        {Title}.resize(800, 600)
-        self.centralwidget = QtWidgets.QWidget({Title})
+class Ui_{window_title}(object):
+    def setupUi(self, {window_title}):
+        {window_title}.setObjectName("{window_title}")
+        {window_title}.resize(800, 600)
+        self.centralwidget = QtWidgets.QWidget({window_title})
         self.centralwidget.setObjectName("centralwidget")
-        {Title}.setCentralWidget(self.centralwidget)
-        self.menubar = QtWidgets.QMenuBar({Title})
+        {window_title}.setCentralWidget(self.centralwidget)
+        self.menubar = QtWidgets.QMenuBar({window_title})
         self.menubar.setGeometry(QtCore.QRect(0, 0, 800, 21))
         self.menubar.setObjectName("menubar")
-        {Title}.setMenuBar(self.menubar)
-        self.statusbar = QtWidgets.QStatusBar({Title})
+        {window_title}.setMenuBar(self.menubar)
+        self.statusbar = QtWidgets.QStatusBar({window_title})
         self.statusbar.setObjectName("statusbar")
-        {Title}.setStatusBar(self.statusbar)
+        {window_title}.setStatusBar(self.statusbar)
 
-        self.retranslateUi({Title})
-        QtCore.QMetaObject.connectSlotsByName({Title})
+        self.retranslateUi({window_title})
+        QtCore.QMetaObject.connectSlotsByName({window_title})
 
-    def retranslateUi(self, {Title}):
-        {Title}.setWindowTitle(QtWidgets.QApplication.translate("{Title}", "{Title}", None, -1))
+    def retranslateUi(self, {window_title}):
+        {window_title}.setWindowTitle(QtWidgets.QApplication.translate("{window_title}", "{window_title}", None, -1))

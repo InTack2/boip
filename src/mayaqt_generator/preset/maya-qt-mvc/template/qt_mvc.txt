@@ -1,2 +1,2 @@
-import {test}
-import {test_02}
+import {window_title}
+import {maya_version}
