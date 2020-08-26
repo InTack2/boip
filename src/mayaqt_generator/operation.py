@@ -230,7 +230,7 @@ class SettingData(object):
     """
 
     def __init__(self, setting_file, template_folder, reader=YamlFileReader):
-        self.__data = self.get_load_data(setting_file, reader)
+        self.__data = self.__get_load_data(setting_file, reader)
         self.__title = self.__data["title"]
         self.__questions = self.__data["question"]
         self.__convert_extensions = self.__data["convertExtensions"]
@@ -252,7 +252,7 @@ class SettingData(object):
     def template_path(self):
         return self.__template_path
 
-    def get_load_data(self, setting_file, reader):
+    def __get_load_data(self, setting_file, reader):
         """データを読み込む
         """
         _reader = reader(setting_file)
