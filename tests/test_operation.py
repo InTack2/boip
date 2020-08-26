@@ -132,4 +132,20 @@ class TestYamlFileReader(object):
 class TestSettingData(object):
     """test code SettingData.
     """
-    pass
+
+    parameters = [("title", "sample"),
+                  ("questions", [{"name": "sample", "message": "what"}]),
+                  ("convert_extensions", {"txt": "py", "ui": "ui"}),
+                  ("template_path", "sample/path")
+                  ]
+
+    @pytest.fixture
+    def sample_yaml(self):
+        target_path = os.path.join(SCRIPT_PATH, "data", "setting_data_test.yaml")
+        return target_path
+
+    @pytest.mark.parametrize("search_attr, answer", parameters)
+    def test_create_value(self, sample_yaml, search_attr, answer):
+        ins = operation.SettingData(sample_yaml, "sample/path")
+        compare_value = getattr(ins, search_attr)
+        assert answer == compare_value
