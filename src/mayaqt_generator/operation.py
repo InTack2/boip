@@ -110,11 +110,11 @@ class TemplateFolderReplaceOperator(FileFormatter):
                 super(TemplateFolderReplaceOperator, self).replace_file(target_file, after_extension)
 
 
-class VoitemSetList(object):
+class BoitemSetList(object):
     def __init__(self, search_path=PRESET_FOLDER):
-        self.__voitem_set_list = self.__get_voitem_set_list(search_path)
+        self.__boitem_set_list = self.__get_boitem_set_list(search_path)
 
-    def __get_voitem_set_list(self, search_path):
+    def __get_boitem_set_list(self, search_path):
         """boitemSetを取得する
 
         Returns:
@@ -139,7 +139,7 @@ class VoitemSetList(object):
         Args:
             target_title (str): setting_file内のtitle名
         """
-        for template_set in self.__voitem_set_list:
+        for template_set in self.__boitem_set_list:
             if target_title == template_set.title:
                 return template_set.template_path
 
@@ -152,14 +152,14 @@ class VoitemSetList(object):
         Returns:
             [type]: [description]
         """
-        for template_set in self.__voitem_set_list:
+        for template_set in self.__boitem_set_list:
             if target_title == template_set.title:
                 return template_set.questions
 
     def select_convert_extensions(self, target_title):
         """titleから該当のconvert_extensionsを取得する
         """
-        for template_set in self.__voitem_set_list:
+        for template_set in self.__boitem_set_list:
             if target_title == template_set.title:
                 return template_set.convert_extensions
 
@@ -183,7 +183,7 @@ class VoitemSetList(object):
             list: タイトルリスト
         """
         title_list = []
-        for template_set in self.__voitem_set_list:
+        for template_set in self.__boitem_set_list:
             title_list.append(template_set.title)
         return title_list
 

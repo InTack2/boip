@@ -7,13 +7,9 @@ from __future__ import absolute_import
 from __future__ import generators
 from __future__ import division
 
-
-import pprint
-
-
 import PyInquirer
 
-from operation import VoitemSetList, TemplateFolderReplaceOperator
+from operation import BoitemSetList, TemplateFolderReplaceOperator
 
 custom_style_2 = PyInquirer.style_from_dict({
     "separator": '#6C6C6C',
@@ -28,18 +24,18 @@ custom_style_2 = PyInquirer.style_from_dict({
 
 class BoitemQuestionCreator(object):
     def __init__(self):
-        self.operator = VoitemSetList()
+        self.boitem_set_list = BoitemSetList()
         self.title = None
         self.question_answer = None
         self.duplicate_folder_path = None
 
-    def create_template_selector(self):
+    def __create_template_selector(self):
         """テンプレートを選択する質問を生成
 
         Returns:
             dict: {title: choice_title}
         """
-        title_list = self.operator.get_title_list()
+        title_list = self.boitem_set_list.get_title_list()
         questions = [
             {
                 "type": "list",
@@ -52,7 +48,7 @@ class BoitemQuestionCreator(object):
         title = answers["title"]
         self.title = title
 
-    def create_multi_question(self):
+    def __create_multi_question(self):
         """複数の質問を生成
 
         Args:
@@ -61,7 +57,7 @@ class BoitemQuestionCreator(object):
         Returns:
             list: questions.
         """
-        add_questions = self.operator.select_questions(self.title)
+        add_questions = self.boitem_set_list.select_questions(self.title)
         questions = []
         for quest in add_questions:
             quest = {key: unicode(value) for key, value in quest.items()}
@@ -75,7 +71,7 @@ class BoitemQuestionCreator(object):
         questions_answers = PyInquirer.prompt(questions)
         self.question_answer = questions_answers
 
-    def create_folder_question(self):
+    def __create_folder_question(self):
         """folderを確認する質問を作成
 
         Returns:
@@ -92,26 +88,26 @@ class BoitemQuestionCreator(object):
 
         folder_name = folder_answer["folder_name"]
 
-        template_path = self.operator.select_template_path(self.title)
+        template_path = self.boitem_set_list.select_template_path(self.title)
 
-        copy_path = self.operator.duplicate_template_folder(template_path, folder_name)
+        copy_path = self.boitem_set_list.duplicate_template_folder(template_path, folder_name)
 
         self.duplicate_folder_path = copy_path
 
-    def replace_file(self):
+    def __replace_file(self):
         """ファイルを上書きする
         """
-        convert_extension_data = self.operator.select_convert_extensions(self.title)
+        convert_extension_data = self.boitem_set_list.select_convert_extensions(self.title)
         _ins = TemplateFolderReplaceOperator(self.duplicate_folder_path, convert_extension_data, self.question_answer)
-        _ins.replace_files()
+        _ins.__replace_files()
 
     def create_question(self):
         """質問を作成する
         """
-        self.create_template_selector()
-        self.create_multi_question()
-        self.create_folder_question()
-        self.replace_file()
+        self.__create_template_selector()
+        self.__create_multi_question()
+        self.__create_folder_question()
+        self.__replace_file()
 
     class NotFoundFolderName(Exception):
         pass
