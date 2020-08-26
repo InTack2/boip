@@ -1,0 +1,7 @@
+title: sample
+convertExtensions:
+  txt: py
+  ui: ui
+question:
+  - name: sample
+    message: "what"

@@ -13,7 +13,7 @@ import pprint
 
 import PyInquirer
 
-from operation import FolderOperation, TemplateFolderOperator
+from operation import VoitemSetList, TemplateFolderReplaceOperator
 
 custom_style_2 = PyInquirer.style_from_dict({
     "separator": '#6C6C6C',
@@ -28,7 +28,10 @@ custom_style_2 = PyInquirer.style_from_dict({
 
 class BoitemQuestionCreator(object):
     def __init__(self):
-        self.operator = FolderOperation()
+        self.operator = VoitemSetList()
+        self.title = None
+        self.question_answer = None
+        self.duplicate_folder_path = None
 
     def create_template_selector(self):
         """テンプレートを選択する質問を生成
@@ -47,10 +50,9 @@ class BoitemQuestionCreator(object):
         ]
         answers = PyInquirer.prompt(questions)
         title = answers["title"]
+        self.title = title
 
-        return title
-
-    def create_multi_question(self, target_title):
+    def create_multi_question(self):
         """複数の質問を生成
 
         Args:
@@ -59,7 +61,7 @@ class BoitemQuestionCreator(object):
         Returns:
             list: questions.
         """
-        add_questions = self.operator.select_questions(target_title)
+        add_questions = self.operator.select_questions(self.title)
         questions = []
         for quest in add_questions:
             quest = {key: unicode(value) for key, value in quest.items()}
@@ -71,9 +73,9 @@ class BoitemQuestionCreator(object):
 
             questions.append(question_template)
         questions_answers = PyInquirer.prompt(questions)
-        return questions_answers
+        self.question_answer = questions_answers
 
-    def create_folder_question(self, title):
+    def create_folder_question(self):
         """folderを確認する質問を作成
 
         Returns:
@@ -90,15 +92,26 @@ class BoitemQuestionCreator(object):
 
         folder_name = folder_answer["folder_name"]
 
-        template_path = self.operator.select_template_path(title)
+        template_path = self.operator.select_template_path(self.title)
 
         copy_path = self.operator.duplicate_template_folder(template_path, folder_name)
 
-        return copy_path
+        self.duplicate_folder_path = copy_path
 
-    def operation_replace_file(self, target_folder_path, convert_extension_data, formatter_data):
-        _ins = TemplateFolderOperator(target_folder_path, convert_extension_data, formatter_data)
+    def replace_file(self):
+        """ファイルを上書きする
+        """
+        convert_extension_data = self.operator.select_convert_extensions(self.title)
+        _ins = TemplateFolderReplaceOperator(self.duplicate_folder_path, convert_extension_data, self.question_answer)
         _ins.replace_files()
+
+    def create_question(self):
+        """質問を作成する
+        """
+        self.create_template_selector()
+        self.create_multi_question()
+        self.create_folder_question()
+        self.replace_file()
 
     class NotFoundFolderName(Exception):
         pass

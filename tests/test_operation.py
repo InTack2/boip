@@ -145,7 +145,9 @@ class TestSettingData(object):
         return target_path
 
     @pytest.mark.parametrize("search_attr, answer", parameters)
-    def test_create_value(self, sample_yaml, search_attr, answer):
+    def test_value(self, sample_yaml, search_attr, answer):
+        """yamlファイルを渡し、対応する値になっているか確認する
+        """
         ins = operation.SettingData(sample_yaml, "sample/path")
         compare_value = getattr(ins, search_attr)
         assert answer == compare_value
