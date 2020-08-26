@@ -36,7 +36,7 @@ class BoitemQuestionCreator(object):
         Returns:
             dict: {title: choice_title}
         """
-        title_list = _boitem_question_creator.operator.get_title_list()
+        title_list = self.operator.get_title_list()
         questions = [
             {
                 "type": "list",
@@ -59,7 +59,7 @@ class BoitemQuestionCreator(object):
         Returns:
             list: questions.
         """
-        add_questions = _boitem_question_creator.operator.select_questions(target_title)
+        add_questions = self.operator.select_questions(target_title)
         questions = []
         for quest in add_questions:
             quest = {key: unicode(value) for key, value in quest.items()}
@@ -102,18 +102,3 @@ class BoitemQuestionCreator(object):
 
     class NotFoundFolderName(Exception):
         pass
-
-
-if __name__ == "__main__":
-    _boitem_question_creator = BoitemQuestionCreator()
-
-    title_answer = _boitem_question_creator.create_template_selector()
-    answers = _boitem_question_creator.create_multi_question(title_answer)
-    create_folder = _boitem_question_creator.create_folder_question(title_answer)
-    convert_extension_data = _boitem_question_creator.operator.select_convert_extensions(title_answer)
-    _boitem_question_creator.operation_replace_file(create_folder, convert_extension_data, formatter_data=answers)
-
-    # リスト質問
-    print("title_answer :{}".format(title_answer))
-    print(answers)
-    print("create_folder : {}".format(create_folder))
