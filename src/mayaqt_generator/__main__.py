@@ -5,7 +5,7 @@ from __future__ import absolute_import
 from __future__ import generators
 from __future__ import division
 
-from app import BoitemQuestionCreator
+from app import BoipQuestionCreator
 
-_boitem_question_creator = BoitemQuestionCreator()
-_boitem_question_creator.create_question()
+_boip_question_creator = BoipQuestionCreator()
+_boip_question_creator.create_question()

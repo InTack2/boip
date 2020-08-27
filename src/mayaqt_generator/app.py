@@ -9,7 +9,7 @@ from __future__ import division
 
 import PyInquirer
 
-from operation import BoitemSetList, TemplateFolderReplaceOperator
+from operation import BoipSetList, TemplateFolderReplaceOperator
 
 custom_style_2 = PyInquirer.style_from_dict({
     "separator": '#6C6C6C',
@@ -22,9 +22,9 @@ custom_style_2 = PyInquirer.style_from_dict({
 })
 
 
-class BoitemQuestionCreator(object):
+class BoipQuestionCreator(object):
     def __init__(self):
-        self.boitem_set_list = BoitemSetList()
+        self.boip_set_list = BoipSetList()
         self.title = None
         self.question_answer = None
         self.duplicate_folder_path = None
@@ -35,7 +35,7 @@ class BoitemQuestionCreator(object):
         Returns:
             dict: {title: choice_title}
         """
-        title_list = self.boitem_set_list.get_title_list()
+        title_list = self.boip_set_list.get_title_list()
         questions = [
             {
                 "type": "list",
@@ -57,7 +57,7 @@ class BoitemQuestionCreator(object):
         Returns:
             list: questions.
         """
-        add_questions = self.boitem_set_list.select_questions(self.title)
+        add_questions = self.boip_set_list.select_questions(self.title)
         questions = []
         for quest in add_questions:
             quest = {key: unicode(value) for key, value in quest.items()}
@@ -88,18 +88,18 @@ class BoitemQuestionCreator(object):
 
         folder_name = folder_answer["folder_name"]
 
-        template_path = self.boitem_set_list.select_template_path(self.title)
+        template_path = self.boip_set_list.select_template_path(self.title)
 
-        copy_path = self.boitem_set_list.duplicate_template_folder(template_path, folder_name)
+        copy_path = self.boip_set_list.duplicate_template_folder(template_path, folder_name)
 
         self.duplicate_folder_path = copy_path
 
     def __replace_file(self):
         """ファイルを上書きする
         """
-        convert_extension_data = self.boitem_set_list.select_convert_extensions(self.title)
+        convert_extension_data = self.boip_set_list.select_convert_extensions(self.title)
         _ins = TemplateFolderReplaceOperator(self.duplicate_folder_path, convert_extension_data, self.question_answer)
-        _ins.__replace_files()
+        _ins.replace_files()
 
     def create_question(self):
         """質問を作成する

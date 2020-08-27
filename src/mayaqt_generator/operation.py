@@ -14,7 +14,7 @@ from abc import ABCMeta, abstractmethod
 import yaml
 
 PRESET_FOLDER = os.path.join(os.path.dirname(__file__), "preset")
-SETTING_FILE = "boitem.yaml"
+SETTING_FILE = "boip.yaml"
 TEMPLATE_FOLDER = "template"
 
 
@@ -110,12 +110,12 @@ class TemplateFolderReplaceOperator(FileFormatter):
                 super(TemplateFolderReplaceOperator, self).replace_file(target_file, after_extension)
 
 
-class BoitemSetList(object):
+class BoipSetList(object):
     def __init__(self, search_path=PRESET_FOLDER):
-        self.__boitem_set_list = self.__get_boitem_set_list(search_path)
+        self.__boip_set_list = self.__get_boip_set_list(search_path)
 
-    def __get_boitem_set_list(self, search_path):
-        """boitemSetを取得する
+    def __get_boip_set_list(self, search_path):
+        """boipSetを取得する
 
         Returns:
             list(SettingData): Setting Data list.
@@ -139,7 +139,7 @@ class BoitemSetList(object):
         Args:
             target_title (str): setting_file内のtitle名
         """
-        for template_set in self.__boitem_set_list:
+        for template_set in self.__boip_set_list:
             if target_title == template_set.title:
                 return template_set.template_path
 
@@ -152,14 +152,14 @@ class BoitemSetList(object):
         Returns:
             [type]: [description]
         """
-        for template_set in self.__boitem_set_list:
+        for template_set in self.__boip_set_list:
             if target_title == template_set.title:
                 return template_set.questions
 
     def select_convert_extensions(self, target_title):
         """titleから該当のconvert_extensionsを取得する
         """
-        for template_set in self.__boitem_set_list:
+        for template_set in self.__boip_set_list:
             if target_title == template_set.title:
                 return template_set.convert_extensions
 
@@ -183,7 +183,7 @@ class BoitemSetList(object):
             list: タイトルリスト
         """
         title_list = []
-        for template_set in self.__boitem_set_list:
+        for template_set in self.__boip_set_list:
             title_list.append(template_set.title)
         return title_list
 
