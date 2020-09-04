@@ -1,2 +1,0 @@
-import {window_title}
-import {maya_version}

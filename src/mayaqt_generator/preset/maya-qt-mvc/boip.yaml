@@ -1,10 +1,10 @@
-title: maya_qt_mvc
+title: MayaQt-MVC
 convertExtensions:
-  txt: py
+  py: py
   ui: ui
 question:
-  - name: window_title
-    message: "Window name?"
+  - name: tool_name
+    message: "Tool name?"
     default: sampleWindow
 
   - name: maya_version
