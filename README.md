@@ -1,2 +1,2 @@
-# mayaqt-generator
-Template generation for maya Qt.
+# boip
+Template Generator.
