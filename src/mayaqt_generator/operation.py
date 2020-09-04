@@ -13,6 +13,8 @@ from abc import ABCMeta, abstractmethod
 
 import yaml
 
+import codecs
+
 PRESET_FOLDER = os.path.join(os.path.dirname(__file__), "preset")
 SETTING_FILE = "boip.yaml"
 TEMPLATE_FOLDER = "template"
@@ -28,7 +30,7 @@ class FileFormatter(object):
     def __load_string_from_file(self, target_file):
         """fileから文字列を読み込む
         """
-        with open(target_file, mode='r') as f:
+        with codecs.open(target_file, mode="r", encoding="utf-8") as f:
             return f.read()
 
     def __format_data(self, target_string):
@@ -37,7 +39,10 @@ class FileFormatter(object):
         Returns:
             str: フォーマット済みの文字列
         """
-        format_after_data = target_string.format(**self.__formatter_data)
+        format_after_data = target_string
+        for key, value in self.__formatter_data.items():
+            replace_word = "{" + key + "}"
+            format_after_data = format_after_data.replace(replace_word, value)
         return format_after_data
 
     def __edit_file(self, target_file, target_string):
@@ -46,7 +51,7 @@ class FileFormatter(object):
         Args:
             target_string ([type]): [description]
         """
-        with open(target_file, mode="w") as f:
+        with codecs.open(target_file, mode="w", encoding="utf-8") as f:
             f.write(target_string)
 
     def __change_extension(self, target_file_path, extension):
