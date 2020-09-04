@@ -40,7 +40,7 @@ class BoipQuestionCreator(object):
             {
                 "type": "list",
                 "name": "title",
-                "message": "テンプレートを選択",
+                "message": "choice template.",
                 "choices": title_list
             }
         ]
@@ -80,7 +80,7 @@ class BoipQuestionCreator(object):
         question = {
             "type": "input",
             "name": "folder_name",
-            "message": "フォルダ名は？"
+            "message": "Create folder name?"
         }
         folder_answer = PyInquirer.prompt(question)
         if folder_answer["folder_name"] == "":
