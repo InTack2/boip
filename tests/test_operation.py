@@ -17,6 +17,76 @@ from mayaqt_generator import operation
 SCRIPT_PATH = os.path.dirname(__file__)
 
 
+@pytest.fixture
+def sample_data_path():
+    data_path = os.path.join(SCRIPT_PATH, "data")
+    return data_path
+
+
+@pytest.fixture
+def sample_yaml(sample_data_path):
+    target_path = os.path.join(sample_data_path, operation.SETTING_FILE_NAME)
+    return target_path
+
+
+@pytest.fixture
+def sample_template_folder(sample_data_path):
+    template_path = os.path.join(sample_data_path, operation.TEMPLATE_FOLDER_NAME)
+    return template_path
+
+
+@pytest.fixture
+def sample_create_boip_set(sample_data_path):
+    boip_set_list = operation.BoipSetList(sample_data_path)
+    return boip_set_list
+
+
+class TestFileFormatter(object):
+    """test code to FileFormatter.
+    """
+
+    def test_replace_file(self, tmp_path):
+        temporary_path = tmp_path / "test_replace_file"
+        temporary_path.mkdir()
+        temp_file = temporary_path / "sample.txt"
+        temp_file.write_text(r"{sample}")
+
+        sample_formatter_data = {"sample": "replace word"}
+        _operation = operation.FileFormatter(sample_formatter_data)
+        _operation.replace_file(temp_file, "txt")
+
+        assert "replace word" == temp_file.read_text()
+
+
+class TestTemplateFolderReplaceOperator(object):
+    """test code to TemplateFolderReplaceOperator.
+    """
+    pass
+
+
+class TestBoipSetList(object):
+    """test code to BoipSetList.
+    """
+
+    def test_select_template_path(self, sample_create_boip_set, sample_template_folder):
+        assert sample_template_folder == sample_create_boip_set.select_template_path("sample")
+
+    def test_select_questions(self, sample_create_boip_set):
+        assert [{"message": "what question?", "name": "sample"}] == sample_create_boip_set.select_questions("sample")
+
+    def test_select_convert_extensions(self, sample_create_boip_set):
+        assert {"txt": "py", "ui": "ui"} == sample_create_boip_set.select_convert_extensions("sample")
+
+    def test_duplicate_template_folder(self, tmp_path, sample_create_boip_set):
+        temporary_path = tmp_path / "test_duplicate"
+        template_folder_path = sample_create_boip_set.select_template_path("sample")
+        sample_create_boip_set.duplicate_template_folder(template_folder_path, str(temporary_path))
+        assert 1 == len(list(temporary_path.iterdir()))
+
+    def test_get_title_list(self, sample_create_boip_set):
+        title_list = sample_create_boip_set.get_title_list()
+        assert ["sample"] == title_list
+
 
 class TestYamlFileReader(object):
     """test code to YamlFIleReader.
@@ -25,7 +95,7 @@ class TestYamlFileReader(object):
     @pytest.fixture
     def template_yaml(self, tmpdir):
         """一時ファイル
-            """
+        """
         test_file = tmpdir.mkdir("TestLoadTemplateTextFile").join("sample.yaml")
         test_file.write("temp: sample")
         return test_file
@@ -42,15 +112,10 @@ class TestSettingData(object):
     """
 
     parameters = [("title", "sample"),
-                  ("questions", [{"name": "sample", "message": "what"}]),
+                  ("questions", [{"name": "sample", "message": "what question?"}]),
                   ("convert_extensions", {"txt": "py", "ui": "ui"}),
                   ("template_path", "sample/path")
                   ]
-
-    @pytest.fixture
-    def sample_yaml(self):
-        target_path = os.path.join(SCRIPT_PATH, "data", "setting_data_test.yaml")
-        return target_path
 
     @pytest.mark.parametrize("search_attr, answer", parameters)
     def test_value(self, sample_yaml, search_attr, answer):
