@@ -16,8 +16,8 @@ import yaml
 import codecs
 
 PRESET_FOLDER = os.path.join(os.path.dirname(__file__), "preset")
-SETTING_FILE = "boip.yaml"
-TEMPLATE_FOLDER = "template"
+SETTING_FILE_NAME = "boip.yaml"
+TEMPLATE_FOLDER_NAME = "template"
 
 
 class FileFormatter(object):
@@ -127,11 +127,11 @@ class BoipSetList(object):
         """
         found_template_set = []
         for root, dirs, files in os.walk(search_path):
-            if TEMPLATE_FOLDER in dirs and SETTING_FILE in files:
-                file_index = files.index(SETTING_FILE)
+            if TEMPLATE_FOLDER_NAME in dirs and SETTING_FILE_NAME in files:
+                file_index = files.index(SETTING_FILE_NAME)
                 setting_file = os.path.join(root, files[file_index])
 
-                dir_index = dirs.index(TEMPLATE_FOLDER)
+                dir_index = dirs.index(TEMPLATE_FOLDER_NAME)
                 template_folder = os.path.join(root, dirs[dir_index])
 
                 found_template_set.append(SettingData(setting_file, template_folder))
