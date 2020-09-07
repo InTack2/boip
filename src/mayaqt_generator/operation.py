@@ -82,10 +82,17 @@ class FileFormatter(object):
 
 
 class TemplateFolderReplaceOperator(FileFormatter):
-    """テンプレートフォルダの置き換え実行
+    """テンプレートフォルダの置き換え実行クラス
     """
 
     def __init__(self, template_folder_path, convert_extension_data, formatter_data):
+        """initialize.
+
+        Args:
+            template_folder_path (str): テンプレートフォルダパス
+            convert_extension_data (dict): {変更前の拡張子: 変更後の拡張子}
+            formatter_data (list): 置き換えに使うフォーマットデータ{"変数名": "置き換え後の文字"}
+        """
         super(TemplateFolderReplaceOperator, self).__init__(formatter_data)
         self.__path = template_folder_path
         self.__convert_extension_data = convert_extension_data
@@ -94,10 +101,10 @@ class TemplateFolderReplaceOperator(FileFormatter):
         """特定の拡張子のファイルを検索する
 
         Args:
-            target_extension ([type]): [description]
+            target_extension (str): 検索するパス
 
         Returns:
-            [type]: [description]
+            str: 拡張子
         """
         found_files = []
         for root, dirs, files in os.walk(search_path):
@@ -117,9 +124,15 @@ class TemplateFolderReplaceOperator(FileFormatter):
 
 class BoipSetList(object):
     def __init__(self, search_path=PRESET_FOLDER):
+        """initialize.
+
+        Args:
+            search_path (str, optional): boip_setを検索したいルートフォルダパス. Defaults to PRESET_FOLDER.
+        """
         self.__boip_set_list = self.__get_boip_set_list(search_path)
 
     def __get_boip_set_list(self, search_path):
+        # type: (str) -> list[SettingData]
         """boipSetを取得する
 
         Returns:
@@ -139,40 +152,54 @@ class BoipSetList(object):
         return found_template_set
 
     def select_template_path(self, target_title):
-        """titleから該当のtemplateを取得する
+        # type: (str) -> str
+        """titleから該当のTemplateFolderPathを取得する
 
         Args:
             target_title (str): setting_file内のtitle名
+
+        Returns:
+            str: TemplateFolderPath
         """
         for template_set in self.__boip_set_list:
             if target_title == template_set.title:
                 return template_set.template_path
 
     def select_questions(self, target_title):
+        # type: (str) -> list[{str: str}]
         """titleから該当のquestionsを取得する
 
         Args:
-            target_title ([type]): [description]
+            target_title (str): 検索したboip.yamlから選択したtile名
 
         Returns:
-            [type]: [description]
+            list: [{"name": "質問の答えを格納する変数名", "message": "質問"}]
         """
         for template_set in self.__boip_set_list:
             if target_title == template_set.title:
                 return template_set.questions
 
     def select_convert_extensions(self, target_title):
+        # type: (str) -> {str, str}
         """titleから該当のconvert_extensionsを取得する
+
+        Args:
+            target_title (str): 対象のtitle名
+
+        Returns:
+            dict: {dist extensins: src extensins}
         """
         for template_set in self.__boip_set_list:
             if target_title == template_set.title:
                 return template_set.convert_extensions
 
     def duplicate_template_folder(self, dis_folder, src_folder_name):
+        # type: (str, str) -> str
         """TemplateFolderを複製する
 
         Args:
-            target_folder (str): 複製先のフォルダ
+            dis_folder (str): 複製元のフォルダパス
+            src_folder_name (str): 複製先のフォルダパス
         """
         current_directory = os.getcwd()
 
@@ -182,6 +209,7 @@ class BoipSetList(object):
         return target_folder
 
     def get_title_list(self):
+        # type: () -> list
         """タイトルリストを取得する
 
         Returns:
@@ -202,10 +230,16 @@ class BaseReader(object):
     __metaclass__ = ABCMeta
 
     def __init__(self, path):
+        """initialize.
+
+        Args:
+            path (str): 対象のフォルダパス
+        """
         self.read_path = path
 
     @ abstractmethod
     def get_read_data(self):
+        # type: () -> None
         """読み込んだデータを返す
         """
         pass
@@ -217,6 +251,9 @@ class YamlFileReader(BaseReader):
 
     def get_read_data(self):
         """読み込んだデータを返す
+
+        Returns:
+            dict: yaml data.
         """
         with open(self.read_path) as f:
             yaml_data = yaml.load(f, Loader=yaml.FullLoader)
@@ -239,22 +276,53 @@ class SettingData(object):
 
     @ property
     def title(self):
+        # type: () -> str
+        """boip.yaml内のtitle
+
+        Returns:
+            str: title
+        """
         return self.__title
 
     @ property
     def questions(self):
+        # type: () -> list[{str: str}]
+        """質問リスト
+
+        Returns:
+            list: 質問リスト
+        """
         return self.__questions
 
     @ property
     def convert_extensions(self):
+        """拡張子変更リスト
+
+        Returns:
+            dict: {変更前: 変更後}
+        """
+        # type: () -> {str: str}
         return self.__convert_extensions
 
     @ property
     def template_path(self):
+        """テンプレートフォルダのパス
+
+        Returns:
+            str: フォルダパス
+        """
+        # type: () -> str
         return self.__template_path
 
     def __get_load_data(self, setting_file, reader):
         """データを読み込む
+
+        Args:
+            setting_file (str): 読み込みたいファイル
+            reader (operation.BaseReader): ファイル読み込みクラス
+
+        Returns:
+            any: ファイル内のデータ
         """
         _reader = reader(setting_file)
         data = _reader.get_read_data()
