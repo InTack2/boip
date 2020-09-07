@@ -6,7 +6,7 @@ install_requires = [
 
 
 setup(
-    name='mayaqt-generator',
+    name='boip',
     version='0.1',
     install_requires=install_requires,
     tests_require="pytest",
