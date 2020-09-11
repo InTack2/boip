@@ -89,7 +89,7 @@ class TemplateFolderReplaceOperator(FileFormatter):
         """initialize.
 
         Args:
-            template_folder_path (str): テンプレートフォルダパス
+            template_folder_path (str): テンプレートフォルダパス これtemplteパスじゃなくない？
             convert_extension_data (dict): {変更前の拡張子: 変更後の拡張子}
             formatter_data (list): 置き換えに使うフォーマットデータ{"変数名": "置き換え後の文字"}
         """

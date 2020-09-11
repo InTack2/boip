@@ -61,7 +61,21 @@ class TestFileFormatter(object):
 class TestTemplateFolderReplaceOperator(object):
     """test code to TemplateFolderReplaceOperator.
     """
-    pass
+
+    def test_replace_file(self, tmp_path):
+        temporary_path = tmp_path / "test_template_folder_replace_file"
+        temporary_path.mkdir()
+        temp_file = temporary_path / "sample.txt"
+        temp_file_2 = temporary_path / "sample_2.txt"
+        temp_file.write_text(r"{sample}")
+        temp_file_2.write_text(r"{sample} {sample}")
+
+        sample_formatter_data = {"sample": "replace word"}
+        _operation = operation.TemplateFolderReplaceOperator(temporary_path, {"txt": "txt"}, sample_formatter_data)
+        _operation.replace_files()
+
+        assert "replace word" == temp_file.read_text()
+        assert "replace word replace word" == temp_file_2.read_text()
 
 
 class TestBoipSetList(object):
