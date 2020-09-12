@@ -23,8 +23,8 @@ custom_style_2 = PyInquirer.style_from_dict({
 
 
 class BoipQuestionCreator(object):
-    def __init__(self):
-        self.boip_set_list = BoipSetList()
+    def __init__(self, target_path=None):
+        self.boip_set_list = BoipSetList(target_path)
         self.title = None
         self.question_answer = None
         self.duplicate_folder_path = None

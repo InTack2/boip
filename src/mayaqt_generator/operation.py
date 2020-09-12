@@ -81,19 +81,19 @@ class FileFormatter(object):
         self.__change_extension(target_file, replace_extension)
 
 
-class TemplateFolderReplaceOperator(FileFormatter):
-    """テンプレートフォルダの置き換え実行クラス
+class FolderFormatter(FileFormatter):
+    """フォルダの置き換え実行クラス
     """
 
     def __init__(self, template_folder_path, convert_extension_data, formatter_data):
         """initialize.
 
         Args:
-            template_folder_path (str): テンプレートフォルダパス これtemplteパスじゃなくない？
+            template_folder_path (str): テンプレートフォルダパス
             convert_extension_data (dict): {変更前の拡張子: 変更後の拡張子}
             formatter_data (list): 置き換えに使うフォーマットデータ{"変数名": "置き換え後の文字"}
         """
-        super(TemplateFolderReplaceOperator, self).__init__(formatter_data)
+        super(FolderFormatter, self).__init__(formatter_data)
         self.__path = template_folder_path
         self.__convert_extension_data = convert_extension_data
 
@@ -119,19 +119,19 @@ class TemplateFolderReplaceOperator(FileFormatter):
         for before_extension, after_extension in self.__convert_extension_data.items():
             target_files = self.__search_extension_file(self.__path, before_extension)
             for target_file in target_files:
-                super(TemplateFolderReplaceOperator, self).replace_file(target_file, after_extension)
+                super(FolderFormatter, self).replace_file(target_file, after_extension)
 
 
 class BoipSetList(object):
-    def __init__(self, search_path=PRESET_FOLDER):
+    def __init__(self, additional_path=None):
         """initialize.
 
         Args:
             search_path (str, optional): boip_setを検索したいルートフォルダパス. Defaults to PRESET_FOLDER.
         """
-        self.__boip_set_list = self.__get_boip_set_list(search_path)
+        self.__boip_set_list = self.__get_boip_set_list(additional_path)
 
-    def __get_boip_set_list(self, search_path):
+    def __get_boip_set_list(self, additional_path):
         # type: (str) -> list[SettingData]
         """boipSetを取得する
 
@@ -139,15 +139,19 @@ class BoipSetList(object):
             list(SettingData): Setting Data list.
         """
         found_template_set = []
-        for root, dirs, files in os.walk(search_path):
-            if TEMPLATE_FOLDER_NAME in dirs and SETTING_FILE_NAME in files:
-                file_index = files.index(SETTING_FILE_NAME)
-                setting_file = os.path.join(root, files[file_index])
+        search_path_list = [PRESET_FOLDER]
+        if additional_path is not None:
+            search_path_list.append(additional_path)
+        for search_path in search_path_list:
+            for root, dirs, files in os.walk(search_path):
+                if TEMPLATE_FOLDER_NAME in dirs and SETTING_FILE_NAME in files:
+                    file_index = files.index(SETTING_FILE_NAME)
+                    setting_file = os.path.join(root, files[file_index])
 
-                dir_index = dirs.index(TEMPLATE_FOLDER_NAME)
-                template_folder = os.path.join(root, dirs[dir_index])
+                    dir_index = dirs.index(TEMPLATE_FOLDER_NAME)
+                    template_folder = os.path.join(root, dirs[dir_index])
 
-                found_template_set.append(SettingData(setting_file, template_folder))
+                    found_template_set.append(SettingData(setting_file, template_folder))
 
         return found_template_set
 
