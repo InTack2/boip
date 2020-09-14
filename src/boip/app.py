@@ -9,7 +9,7 @@ from __future__ import division
 
 import PyInquirer
 
-from operation import BoipSetList, TemplateFolderReplaceOperator
+from .operation import BoipSetList, FolderFormatter
 
 
 class BoipQuestionCreator(object):
@@ -88,7 +88,7 @@ class BoipQuestionCreator(object):
         """ファイルを上書きする
         """
         convert_extension_data = self.boip_set_list.select_convert_extensions(self.title)
-        _ins = TemplateFolderReplaceOperator(self.duplicate_folder_path, convert_extension_data, self.question_answer)
+        _ins = FolderFormatter(self.duplicate_folder_path, convert_extension_data, self.question_answer)
         _ins.replace_files()
 
     def create_question(self):
