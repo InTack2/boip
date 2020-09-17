@@ -1,75 +1,79 @@
-## 1. boip
+# boip
+[Japanese](README_JP.md)
 
-Boiler Plateの略でboipです。  
-コードを書くときのテンプレートを元に、いくつかの質問の答えからコードを生成するライブラリです。  
-私がテクニカルアーティストなので、追加するtemplateはMaya関連などのコード生成が多めです。  
+boip is an abbreviation for Boiler Plate.  
+
+A library that generates code from code templates based on the answers to some questions.  
+I am a technical artist.  
+Therefore, the template to be added has a lot of code generation such as Maya related.  
 
 
-## 2. 使い方
-### 2.1. pip installする
+## 1. How to use.
+### 1.1. pip install
 ```bash
 python -m pip install boip
 ```
 
-### 2.2. CLIでboipを実行する
+### 1.2. Run boip with CLI.
 ```bash
 python -m boip
 ```
 
-### 2.3. テンプレートを配置したいフォルダに移動する
+### 1.3. CD to the folder where you want to place the template.
 ```bash
-cd "テンプレートを配置したいフォルダパス"
+cd "Folder path where you want to place the template."
 ```
 
-### 2.4. テンプレートを選び質問に答える
+### 1.4. Choose a template and answer your questions.
 
 [![Image from Gyazo](https://i.gyazo.com/b3127fecbe5af7ea40fdce9a09e86c25.gif)](https://gyazo.com/b3127fecbe5af7ea40fdce9a09e86c25)
 
-### 生成されたフォルダを確認する
-最後のフォルダ名でカレントディレクトリ以下にコピーされています。  
-今回は「MayaQt-MVC」を選びましたので、Maya+Qt+MVCパターンのテンプレートが生成されてます。  
+### 1.5. Check the generated folder.
+It is copied under cd with the last selected folder name.  
+Since I chose "Maya Qt-MVC" this time, a template of Maya + Qt + MVC pattern is generated.  
 
 [![Image from Gyazo](https://i.gyazo.com/fc49047b094d2d9dfe305da46ad30f0a.gif)](https://gyazo.com/fc49047b094d2d9dfe305da46ad30f0a)
 
 
 
-## 3. 自分のテンプレートを追加する
-あらかじめコードひな形(BoipSet)を用意し、-sフラグでBoipSetがあるフォルダパスを指定してください。
+## 2. Add your own template.
+Prepare a code template (BoipSet) in advance.
+Then specify the folder path where BoipSet is located with the -s flag.
 ```
-python -m boip -s "対象のフォルダパス"
+python -m boip -s "Target folder path."
 ```
 
-### 3.1. BoipSetとは
-下記の2つをセットでBoipSetとしています。  
-・質問後、置き換えに使う「template」という名前のフォルダ  
-・boip.yamlという名前の設定ファイルが必要です。  
+### 2.1. What is BoipSet?
+The following two are set as a Boip Set.  
+- After asking a question, a folder named "template" to use for replacement.  
+- Configuration file named boip.yaml.  
   
-参考は[こちら](https://github.com/InTack2/boip/tree/master/src/boip/preset)  
+[reference](https://github.com/InTack2/boip/tree/master/src/boip/preset)  
 
-#### 3.1.1. boip.yamlの書き方
+#### 2.1.1. How to write boip.yaml.
 ``` yaml
-title: MayaQt-MVC # テンプレート名
-convertExtensions: # 変更前の拡張子:　変更後の拡張子(同じ拡張子でもOK.)
+title: MayaQt-MVC # template name
+convertExtensions: # distExtension srcExtension(The same extension is okay.)
   py: py
   ui: ui
-question: # 質問リスト(１つの質問で可)
-  - name: tool_name # 置き換えに使う名前. ひな形のコードには{名前}で記載する
-    message: "Tool name?" # 質問
-    default: sampleWindow # 既存の値
+question: # question list
+  - name: tool_name # Name to use for replacement. Use with {Name} for stationery.
+    message: "Tool name?" # Question.
+    default: sampleWindow # Default Value.
 
   - name: maya_version
     message: "What version of Maya are you using?"
     default: 2020
 ```
 
-#### 3.1.2. templateの作り方
-template以下のフォルダが丸々コピーされ{name}内が質問の答えで変換されます。  
-未来的には自動生成を入れる想定ですが、現状は手動です。  
+#### 2.1.2. How to make a template.
+The folders under template will be copied. After that, the inside of {name} is converted by the answer to the question.  
+It is expected that automatic generation will be included in the future, but currently it is manual.  
 
-例)上記の「MayaQt-MVC」の場合  
-質問が{tool_name}と{maya_version}の2つがあります。
+Example)In the case of "MayaQt-MVC" above.  
+I have two questions, {tool_name} and {maya_version}.
 
-・テンプレート
+- template
 ```python:sample.py
 import sys
 
@@ -77,17 +81,20 @@ print("{tool_name}")
 print("{maya_version}")
 ```
 
-・質問に答える
+- answer the questions.
 ```bash
 Tool name? > sampleWindow
 What version of Maya are you using? > 2020
 ```
 
-・生成後
-質問の答えで変換されて下記になります。
+- After generation.
+The answer to the question will be converted to the following.  
+
 ```python:sample.py
 import sys
 
 print("sampleWindow")
 print("2020")
 ```
+
+If you have a nice template, Please make a merge request!
