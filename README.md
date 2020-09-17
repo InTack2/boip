@@ -1,5 +1,5 @@
 # boip
-[Japanese](README_JP.md)
+[Japanese](https://github.com/InTack2/boip/blob/master/README_JP.md)
 
 boip is an abbreviation for Boiler Plate.  
 

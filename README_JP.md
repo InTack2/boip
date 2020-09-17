@@ -1,5 +1,5 @@
 # Boip
-[English](README.md)
+[English](https://github.com/InTack2/boip)
 
 boipはBoiler Plateの略です。  
 コードテンプレートからいくつかの質問の答えを元にコードを生成するライブラリです。  
