@@ -6,10 +6,14 @@ from __future__ import unicode_literals
 from __future__ import absolute_import
 from __future__ import generators
 from __future__ import division
+import sys
 
 import PyInquirer
 
 from .operation import BoipSetList, FolderFormatter
+
+if sys.version_info[0] >= 3:
+    unicode = str
 
 
 class BoipQuestionCreator(object):
