@@ -1,4 +1,9 @@
 # boip
+[![PyPI Versions](https://img.shields.io/pypi/v/boip.svg)](https://pypi.org/project/boip)
+[![license](https://img.shields.io/pypi/l/boip)](https://pypi.org/project/boip)
+[![Supported Versions](https://img.shields.io/pypi/pyversions/boip.svg)](https://pypi.org/project/boip)
+[![code style](https://img.shields.io/badge/code%20style-flake8-000000.svg)](https://pypi.org/project/flake8/)  
+
 [Japanese](https://github.com/InTack2/boip/blob/master/README_JP.md)
 
 boip is an abbreviation for Boiler Plate.  

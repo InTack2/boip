@@ -1,4 +1,9 @@
 # Boip
+[![PyPI Versions](https://img.shields.io/pypi/v/boip.svg)](https://pypi.org/project/boip)
+[![license](https://img.shields.io/pypi/l/boip)](https://pypi.org/project/boip)
+[![Supported Versions](https://img.shields.io/pypi/pyversions/boip.svg)](https://pypi.org/project/boip)
+[![code style](https://img.shields.io/badge/code%20style-flake8-000000.svg)](https://pypi.org/project/flake8/)  
+
 [English](https://github.com/InTack2/boip)
 
 boipはBoiler Plateの略です。  
