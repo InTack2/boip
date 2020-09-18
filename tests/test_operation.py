@@ -11,7 +11,7 @@ import os
 
 import pytest
 
-from mayaqt_generator import operation
+from boip import operation
 
 
 SCRIPT_PATH = os.path.dirname(__file__)
@@ -53,7 +53,7 @@ class TestFileFormatter(object):
 
         sample_formatter_data = {"sample": "replace word"}
         _operation = operation.FileFormatter(sample_formatter_data)
-        _operation.replace_file(temp_file, "txt")
+        _operation.replace_file(str(temp_file), "txt")
 
         assert "replace word" == temp_file.read_text()
 
@@ -71,7 +71,7 @@ class TestFolderFormatter(object):
         temp_file_2.write_text(r"{sample} {sample}")
 
         sample_formatter_data = {"sample": "replace word"}
-        _operation = operation.FolderFormatter(temporary_path, {"txt": "txt"}, sample_formatter_data)
+        _operation = operation.FolderFormatter(str(temporary_path), {"txt": "txt"}, sample_formatter_data)
         _operation.replace_files()
 
         assert "replace word" == temp_file.read_text()
@@ -99,7 +99,7 @@ class TestBoipSetList(object):
 
     def test_get_title_list(self, sample_create_boip_set):
         title_list = sample_create_boip_set.get_title_list()
-        assert 3 == len(title_list)
+        assert 2 == len(title_list)
 
 
 class TestYamlFileReader(object):
