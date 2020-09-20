@@ -1,5 +1,5 @@
 # -*- coding: utf-8 -*-
-"""searchr
+"""各実行クラスモジュール
 """
 from __future__ import print_function
 from __future__ import unicode_literals
@@ -21,20 +21,34 @@ TEMPLATE_FOLDER_NAME = "template"
 
 
 class FileFormatter(object):
-    """ファイルをフォーマットする
+    """ファイルフォーマットクラス
     """
 
     def __init__(self, formatter_data):
+        """initialize.
+
+        Args:
+            formatter_data (dict): フォーマットに使用するdict。
+        """
         self.__formatter_data = formatter_data
 
     def __load_string_from_file(self, target_file):
         """fileから文字列を読み込む
+
+        Args:
+            target_file (str): ファイルパス
+
+        Returns:
+            str: ファイルの中身
         """
         with codecs.open(target_file, mode="r", encoding="utf-8") as f:
             return f.read()
 
     def __format_data(self, target_string):
         """文字列をフォーマットする
+
+        Args:
+            target_string (str): 対象の文字列
 
         Returns:
             str: フォーマット済みの文字列
@@ -58,8 +72,8 @@ class FileFormatter(object):
         """拡張子を変更する
 
         Args:
-            target_file ([type]): [description]
-            extension ([type]): [description]
+            target_file_path (str): 対象のファイルパス
+            extension ([type]): 変更先の
         """
         target_file_dir = os.path.dirname(target_file_path)
         file_name = os.path.basename(target_file_path)
@@ -123,6 +137,9 @@ class FolderFormatter(FileFormatter):
 
 
 class BoipSetList(object):
+    """質問とtemplateFolderのセットクラス
+    """
+
     def __init__(self, additional_path=None):
         """initialize.
 

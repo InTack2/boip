@@ -1,5 +1,6 @@
 # -*- coding: utf-8 -*-
-"""メイン処理
+"""メイン処理  
+質問の生成、folder生成など。
 """
 from __future__ import print_function
 from __future__ import unicode_literals
@@ -17,7 +18,15 @@ if sys.version_info[0] >= 3:
 
 
 class BoipQuestionCreator(object):
+    """Boipのクエスト生成クラス
+    """
+
     def __init__(self, target_path=None):
+        """initialize.
+
+        Args:
+            target_path (str, optional): BoipSetを追加で検索する用のパス。DefaultsはNone
+        """
         self.boip_set_list = BoipSetList(target_path)
         self.title = None
         self.question_answer = None
@@ -96,7 +105,7 @@ class BoipQuestionCreator(object):
         _ins.replace_files()
 
     def create_question(self):
-        """質問を作成する
+        """質問を作成する  
         """
         self.__create_template_selector()
         self.__create_multi_question()
