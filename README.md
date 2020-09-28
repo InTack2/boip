@@ -1,5 +1,6 @@
 # boip
 [![PyPI Versions](https://img.shields.io/pypi/v/boip.svg)](https://pypi.org/project/boip)
+[![Downloads](https://pepy.tech/badge/boip)](https://pepy.tech/project/boip)
 [![license](https://img.shields.io/pypi/l/boip)](https://pypi.org/project/boip)
 [![Supported Versions](https://img.shields.io/pypi/pyversions/boip.svg)](https://pypi.org/project/boip)
 [![pytest](https://codecov.io/gh/InTack2/boip/branch/master/graph/badge.svg)](https://codecov.io/gh/InTack2/boip)
